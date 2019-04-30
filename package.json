@@ -1,0 +1,24 @@
+{
+  "name": "test-redux-react-hooks",
+  "version": "1.0.0",
+  "description": "A test to compare connection to Redux store with hoc and hooks",
+  "author": "Adrien Guéret",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel index.html"
+  },
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.1.0-alpha.3",
+    "react-router": "^5.0.0",
+    "redux": "^4.0.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-runtime": "^6.26.0",
+    "parcel-bundler": "=1.6.2"
+  }
+}
