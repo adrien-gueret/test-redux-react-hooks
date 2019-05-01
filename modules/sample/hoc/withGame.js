@@ -1,29 +1,30 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { actions, selectors } from '../../store'
-import { useDispatch } from '../../utils'
+import { useAction } from '../../utils'
 
 function withGame(WrappedComponent) {
   const displayName = `WithGame(${WrappedComponent.displayName || WrappedComponent.name})`;
 
   function WithGame({
     gameId,
-    fetchGame,
     game,
     ...otherProps
   }) {
     const {
-        runDispatch,
+        dispatch,
         isLoading,
         error,
         reset,
-    } = useDispatch(fetchGame, [gameId]);
+    } = useAction(actions.getGame(gameId), [gameId]);
 
-    useLayoutEffect(() => {
-        if (!game && !error && !isLoading) {
-            runDispatch();
+    useEffect(() => {
+        if (game || error || isLoading) {
+            return;
         }
+        
+        dispatch();
     }, [gameId]);
 
     return (
@@ -49,14 +50,5 @@ export default function withGameContainer(WrappedComponent) {
     game: selectors.games.getById(state, gameId),
   });
 
-  const mapDispatchToProps = (dispatch, { gameId }) => ({
-    fetchGame() {
-      return dispatch(actions.getGame(gameId));
-    },
-  });
-
-  return connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(WithGame);
+  return connect(mapStateToProps)(WithGame);
 }

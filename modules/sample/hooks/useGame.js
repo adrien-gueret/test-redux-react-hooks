@@ -1,23 +1,24 @@
-import { useActions, useSelector } from 'react-redux';
-import { useLayoutEffect } from 'react';
-import { useDispatch } from '../../utils';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useAction } from '../../utils';
 import { actions, selectors } from '../../store'
 
 export default function useGame(gameId) {
     const game = useSelector(state => selectors.games.getById(state, gameId), [gameId]);
-    const getGame = useActions(() => actions.getGame(gameId), [gameId]);
-
+  
     const {
-        runDispatch,
+        dispatch,
         isLoading,
         error,
         reset,
-    } = useDispatch(getGame, [gameId]);
+    } = useAction(actions.getGame(gameId), [gameId]);
 
-    useLayoutEffect(() => {
-        if (!game && !error && !isLoading) {
-            runDispatch();
+    useEffect(() => {
+        if (game || error || isLoading) {
+            return;
         }
+
+        dispatch();
     }, [gameId]);
 
     return {

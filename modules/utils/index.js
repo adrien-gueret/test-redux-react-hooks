@@ -1,2 +1,2 @@
 export { default as useAsyncCallback } from './hooks/useAsyncCallback';
-export { default as useDispatch } from './hooks/useDispatch';
+export { default as useAction } from './hooks/useAction';
